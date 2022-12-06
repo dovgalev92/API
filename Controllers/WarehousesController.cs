@@ -36,20 +36,20 @@ namespace API.Controllers
         }
         [Route("GetWarehouse/{id}")]
         [HttpGet]
-        public List<Warehouse>GetWarehouseId(int id)
+        public List<Warehouse> GetWarehouseId(int id)
         {
             var itemIdWarehouse = context.Warehouses.Where(w => w.Id.Equals(id)).ToList();
             var listWarehouseRoom = context.WarehouseRooms.AsNoTracking().ToList();
-            List<Warehouse> warehouses= new();
-            foreach(var warehouseItem in itemIdWarehouse)
+            List<Warehouse> warehouses = new();
+            foreach (var warehouseItem in itemIdWarehouse)
             {
-                Warehouse getwarehouseitem= new();
+                Warehouse getwarehouseitem = new();
                 getwarehouseitem.Name = warehouseItem.Name;
                 getwarehouseitem.CompanyId = warehouseItem.CompanyId;
                 getwarehouseitem.RegionId = warehouseItem.RegionId;
 
                 var getEqualsItem = listWarehouseRoom.Where(nameRoom => nameRoom.WarehouseId.Equals(warehouseItem.Id)).ToList();
-                foreach(var name_room in getEqualsItem)
+                foreach (var name_room in getEqualsItem)
                 {
                     getwarehouseitem.name_compartment = name_room.Name.ToString();
                     getwarehouseitem.name_compartment += ",";
@@ -57,8 +57,14 @@ namespace API.Controllers
                 warehouses.Add(getwarehouseitem);
             }
             return warehouses;
-
         }
-
+        [Route("AddNewWarehouse")]
+        [HttpPost]
+        public async Task<IActionResult> AddWarehouse([FromBody] Warehouse warehouse)
+        {
+            context.Warehouses.Add(warehouse);
+            await context.SaveChangesAsync();
+            return Content("Данные успешно добавлены");
+        }
     }
 }
