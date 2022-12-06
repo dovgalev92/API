@@ -79,5 +79,19 @@ namespace API.Controllers
             return Content($"Данные о {resultEquals.Name} успешно обновлены");
             
         }
+        [Route("UpdateWarehouseRoom/{id}")]
+        [HttpPut]
+        public IActionResult UpdateWarehousesRoom(int id, [FromBody] WarehouseRoom room)
+        {
+            var getItemOfFilter = context.WarehouseRooms.Find(id);
+            getItemOfFilter.Name = room.Name;
+            getItemOfFilter.Square = room.Square;
+            getItemOfFilter.WarehouseId = room.WarehouseId;
+
+            context.Update(getElementOfFilter);
+            context.SaveChanges();
+
+            return Content($"Данные о {getItemOfFilter.Name} успешно изменены");
+        }
     }
 }
