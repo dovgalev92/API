@@ -14,7 +14,6 @@ namespace API.Controllers
         {
             context = _context;
         }
-        [Route("ListWarehouse")]
         [HttpGet]
         public List<Warehouse> GetWarehousesList()
         {
@@ -65,6 +64,20 @@ namespace API.Controllers
             context.Warehouses.Add(warehouse);
             await context.SaveChangesAsync();
             return Content("Данные успешно добавлены");
+        }
+      
+        [HttpPut("Update/{id}")]
+        public IActionResult UpdateWarehouses(int id, [FromBody] Warehouse warehouse)
+        {
+            var resultEquals = context.Warehouses.Find(id);
+            resultEquals.Name = warehouse.Name;
+            resultEquals.CompanyId = warehouse.CompanyId;
+            resultEquals.RegionId = warehouse.RegionId;
+
+            context.Update(resultEquals);
+            context.SaveChanges();
+            return Content($"Данные о {resultEquals.Name} успешно обновлены");
+            
         }
     }
 }
