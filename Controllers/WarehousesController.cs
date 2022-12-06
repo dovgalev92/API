@@ -88,7 +88,7 @@ namespace API.Controllers
             getItemOfFilter.Square = room.Square;
             getItemOfFilter.WarehouseId = room.WarehouseId;
 
-            context.Update(getElementOfFilter);
+            context.Update(getItemOfFilter);
             context.SaveChanges();
 
             return Content($"Данные о {getItemOfFilter.Name} успешно изменены");
