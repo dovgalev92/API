@@ -63,7 +63,7 @@ namespace API.Controllers
         {
             context.Warehouses.Add(warehouse);
             context.SaveChanges();
-            return CreatedAtAction("GetWarehouseId", new Warehouse { Id = warehouse.Id});
+            return CreatedAtAction("GetWarehouseId", new Warehouse { Id = warehouse.Id}, warehouse);
         }
       
         [HttpPut("Update/{id}")]
