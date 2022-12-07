@@ -68,7 +68,7 @@ namespace API.Controllers
       
         [HttpPut("Update/{id}")]
         public IActionResult UpdateWarehouses(int id, [FromBody] Warehouse warehouse)
-        {
+       {
             if (id != warehouse.Id)
             {
                 return BadRequest();
@@ -82,15 +82,13 @@ namespace API.Controllers
         [HttpPut]
         public IActionResult UpdateWarehousesRoom(int id, [FromBody] WarehouseRoom room)
         {
-            var getItemOfFilter = context.WarehouseRooms.Find(id);
-            getItemOfFilter.Name = room.Name;
-            getItemOfFilter.Square = room.Square;
-            getItemOfFilter.WarehouseId = room.WarehouseId;
-
-            context.Update(getItemOfFilter);
+            if (id != room.Id)
+            {
+                return BadRequest();
+            }
+            context.Entry(room).State = EntityState.Modified;
             context.SaveChanges();
-
-            return Content($"Данные о {getItemOfFilter.Name} успешно изменены");
+            return Content("Обновление прошло успешно");
         }
     }
 }
