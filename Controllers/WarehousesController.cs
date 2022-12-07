@@ -69,14 +69,13 @@ namespace API.Controllers
         [HttpPut("Update/{id}")]
         public IActionResult UpdateWarehouses(int id, [FromBody] Warehouse warehouse)
         {
-            var resultEquals = context.Warehouses.Find(id);
-            resultEquals.Name = warehouse.Name;
-            resultEquals.CompanyId = warehouse.CompanyId;
-            resultEquals.RegionId = warehouse.RegionId;
-
-            context.Update(resultEquals);
+            if (id != warehouse.Id)
+            {
+                return BadRequest();
+            }
+            context.Entry(warehouse).State = EntityState.Modified;
             context.SaveChanges();
-            return Content($"Данные о {resultEquals.Name} успешно обновлены");
+            return Content("Обновление прошло успешно");
             
         }
         [Route("UpdateWarehouseRoom/{id}")]
