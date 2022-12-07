@@ -59,11 +59,11 @@ namespace API.Controllers
         }
         [Route("AddNewWarehouse")]
         [HttpPost]
-        public async Task<IActionResult> AddWarehouse([FromBody] Warehouse warehouse)
+        public ActionResult<Warehouse> AddWarehouse([FromBody] Warehouse warehouse)
         {
             context.Warehouses.Add(warehouse);
-            await context.SaveChangesAsync();
-            return Content("Данные успешно добавлены");
+            context.SaveChangesAsync();
+            return CreatedAtAction("GetWarehouseId", new Warehouse { Id = warehouse.Id});
         }
       
         [HttpPut("Update/{id}")]
