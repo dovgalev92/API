@@ -62,7 +62,7 @@ namespace API.Controllers
         public ActionResult<Warehouse> AddWarehouse([FromBody] Warehouse warehouse)
         {
             context.Warehouses.Add(warehouse);
-            context.SaveChangesAsync();
+            context.SaveChanges();
             return CreatedAtAction("GetWarehouseId", new Warehouse { Id = warehouse.Id});
         }
       
