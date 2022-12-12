@@ -23,6 +23,7 @@ namespace API.Controllers
             foreach (var get_warehouse in warehouse_list)
             {
                 Warehouse item_warehose = new();
+                item_warehose.Id = get_warehouse.Id;
                 item_warehose.Name = get_warehouse.Name;
                 item_warehose.CompanyId = get_warehouse.CompanyId;
                 item_warehose.RegionId = get_warehouse.RegionId;
@@ -43,6 +44,7 @@ namespace API.Controllers
             foreach (var warehouseItem in itemIdWarehouse)
             {
                 Warehouse getwarehouseitem = new();
+                getwarehouseitem.Id = warehouseItem.Id;
                 getwarehouseitem.Name = warehouseItem.Name;
                 getwarehouseitem.CompanyId = warehouseItem.CompanyId;
                 getwarehouseitem.RegionId = warehouseItem.RegionId;
@@ -50,7 +52,7 @@ namespace API.Controllers
                 var getEqualsItem = listWarehouseRoom.Where(nameRoom => nameRoom.WarehouseId.Equals(warehouseItem.Id)).ToList();
                 foreach (var name_room in getEqualsItem)
                 {
-                    getwarehouseitem.name_compartment = name_room.Name.ToString();
+                    getwarehouseitem.name_compartment += name_room.Name.ToString();
                     getwarehouseitem.name_compartment += ",";
                 }
                 warehouses.Add(getwarehouseitem);
